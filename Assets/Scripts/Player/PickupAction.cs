@@ -1,4 +1,5 @@
 using HelperFunction.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -10,6 +11,7 @@ namespace Player
         [SerializeField] private Button pickupBtn;
         [SerializeField] private Slider pickupSlider;
         [SerializeField] private ParticleSystem particle;
+        [SerializeField] private TMP_Text bombCount;
         private GameObject _tempHolder;
         private void Start()
         {
@@ -19,9 +21,10 @@ namespace Player
 
         private void PlayParticle(float arg0)
         {
-            var pos = WorldPointToCanvas.CanvasElement(pickupSlider.handleRect);
-            particle.transform.position = pos;
+            //var pos = WorldPointToCanvas.CanvasElement(pickupSlider.handleRect);
+            //particle.transform.position = pos;
             particle.Play();
+            bombCount.text = $"{arg0}";
         }
 
         private void PickupBtnAction()
