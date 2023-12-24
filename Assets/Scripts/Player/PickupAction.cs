@@ -1,4 +1,3 @@
-using HelperFunction.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +12,7 @@ namespace Player
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private TMP_Text bombCount;
         private GameObject _tempHolder;
+        private int _pickupCount;
         private void Start()
         {
             pickupBtn.onClick.AddListener(PickupBtnAction);
@@ -21,10 +21,14 @@ namespace Player
 
         private void PlayParticle(float arg0)
         {
-            //var pos = WorldPointToCanvas.CanvasElement(pickupSlider.handleRect);
-            //particle.transform.position = pos;
             particle.Play();
+            _pickupCount++;
             bombCount.text = $"{arg0}";
+            if (_pickupCount >= 5)
+            {
+                //GameBehaviourManager.Instance.UIManager;
+                enabled = false;
+            }
         }
 
         private void PickupBtnAction()

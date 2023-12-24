@@ -13,6 +13,7 @@ namespace InGame
 
         [SerializeField] private GameObject spawnObject;
         [SerializeField] private GameObject randomObject;
+        [SerializeField] private Transform spawnParent;
         private void Start()
         {
             var i = 0;
@@ -36,7 +37,13 @@ namespace InGame
             var randomZpos = Random.Range(spawnPointMinZ, spawnPointMaxZ);
 
             var placePos = new Vector3(randomXpos, 2, randomZpos);
-            Instantiate(spawnObj, placePos, quaternion.identity);
+            var tempObject = Instantiate(spawnObj, placePos, quaternion.identity);
+            tempObject.transform.parent = spawnParent;
+        }
+
+        public void DestroySpawnObjects()
+        {
+            Destroy(spawnParent.gameObject);
         }
     }
 }

@@ -1,4 +1,6 @@
 using Player;
+using Player.MovementController;
+using UIScripts;
 using UnityEngine;
 
 namespace Utils
@@ -26,8 +28,12 @@ namespace Utils
         #endregion
 
         [SerializeField] private PlayerAnimationController playerAnimationController;
-
-
+        [SerializeField] private UIManager uIManager;
+        [SerializeField] private AudioListener audioListener;
+        [SerializeField] private SwipeAndHold4Directions swipeController;
+        public SwipeAndHold4Directions SwipeController => swipeController;
+        public UIManager UIManager => uIManager;
+        public AudioListener AudioListener => audioListener;
         public PlayerAnimationController PlayerAnimationController => playerAnimationController;
     }
 }

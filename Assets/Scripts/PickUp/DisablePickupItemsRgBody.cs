@@ -8,11 +8,17 @@ namespace PickUp
         private Rigidbody _mBody;
         private Collider _mCollider;
         private DisablePickupItemsRgBody _mScript;
+        [SerializeField] private bool isBall;
         private void Start()
         {
+            _mScript = GetComponent<DisablePickupItemsRgBody>();
+            if (!isBall)
+            {
+                Destroy(_mScript);
+                return;
+            }
             _mBody = GetComponent<Rigidbody>();
             _mCollider = GetComponent<Collider>();
-            _mScript = GetComponent<DisablePickupItemsRgBody>();
         }
 
         private void OnCollisionEnter(Collision other)
