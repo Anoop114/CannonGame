@@ -6,6 +6,8 @@ namespace InGame
 {
     public class RandomPickupSpawner : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private float spawnPointMinX;
         [SerializeField] private float spawnPointMaxX;
         [SerializeField] private float spawnPointMinZ;
@@ -14,6 +16,9 @@ namespace InGame
         [SerializeField] private GameObject spawnObject;
         [SerializeField] private GameObject randomObject;
         [SerializeField] private Transform spawnParent;
+
+        #endregion
+        
         private void Start()
         {
             var i = 0;
@@ -31,6 +36,7 @@ namespace InGame
             }
         }
 
+        // call spawn random ball and cubes.
         private void SpawnRandomCannonBall(GameObject spawnObj)
         {
             var randomXpos = Random.Range(spawnPointMinX, spawnPointMaxX);

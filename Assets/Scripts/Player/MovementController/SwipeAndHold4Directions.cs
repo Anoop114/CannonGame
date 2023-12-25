@@ -90,6 +90,7 @@ namespace Player.MovementController
             }
         }
 
+        //call player to move on desire direction.
         private void SwipeMoveAction()
         {
             if (_swipeRightOn)
@@ -110,17 +111,21 @@ namespace Player.MovementController
             }
         }
 
+        #region Reset All values
+
         private void ResetVariablesToZero()
         {
             _fingerInitialPositionX = _fingerMovedPositionX = 
-            _fingerInitialPositionY = 
-            _fingerMovedPositionY = 0;
+                _fingerInitialPositionY = 
+                    _fingerMovedPositionY = 0;
         }
 
         private void ResetBoolToFalse()
         {
             _swipeUpOn = _swipeDownOn = _swipeRightOn = _swipeLeftOn = false;
         }
+
+        #endregion
 
         private bool IsAllSwipeFalse()
         {

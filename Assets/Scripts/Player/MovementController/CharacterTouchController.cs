@@ -6,47 +6,62 @@ namespace Player.MovementController
 {
     public class CharacterTouchController : MonoBehaviour
     {
+        #region Variables
+
         private float _horizontalMove;
         private float _verticalMove;
         private float _speed;
         private float _rotateVelocity;
         private float _ySpeed;
+        private float _animationVelocity;
         
         private Vector3 _moveDir;
+        private Rigidbody _rb;
 
+        private bool _isStop;
+        private bool _isJump;
         private bool _moveLeft, _moveRight, _moveForward, _moveBackward;
+        private bool _isStartWalkSoundPlay,_isStartRunSoundPlay;
         
         [SerializeField] private float speedAcceleration;
         [SerializeField] private float maxSpeed;
         [SerializeField] private Button jumpBtn;
-        private bool _isStop;
-
-        private bool _isJump;
         
-        
-        private float _animationVelocity;
+        private void JumpAction() => _isJump = true;
 
-        private Rigidbody _rb;
+        #endregion
+
+        #region Unity Event
+
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
 
             jumpBtn.onClick.AddListener(JumpAction);
         }
+        private void OnEnable() => ActionHelper.OnFingerMove += MovePlayer;
 
-        private void JumpAction()
-        {
-            _isJump = true;
-        }
+        private void OnDisable() => ActionHelper.OnFingerMove += MovePlayer;
 
-        private void OnEnable()
+        #endregion
+
+        private void Update()
         {
-            ActionHelper.OnFingerMove += MovePlayer;
+            //check player stop moving
+            CheckPlayerStoped();
+            
+            // check which direction the player is moving.
+            AssigneePlayerDirection();
+            
+            // move player on desire direction with rotation.
+            PlayerMoveWithRotation();
+            
+            // play walking and running sound.
+            SoundPlayer();
         }
-        private void OnDisable()
-        {
-            ActionHelper.OnFingerMove += MovePlayer;
-        }
+        
+        #region Move Player Logic
+
         private void MovePlayer(PlayerDirection direction)
         {
             switch (direction)
@@ -76,18 +91,20 @@ namespace Player.MovementController
 
         }
 
-        private void StopAction()
-        {
-            if(!_isStop)return;
-            if (_speed > 0)
-                _speed -= Time.deltaTime * 5f;
-            else
-                _horizontalMove = _verticalMove = 0;
-            
-            if (_animationVelocity > 0)
-                _animationVelocity -= Time.deltaTime * 2f;
-        }
+        #region Player Direction
 
+        private void AssigneePlayerDirection()
+        {
+            if (_moveLeft || _moveRight)
+            {
+                MoveLeftRight(_moveLeft ? -1 : 1);
+            }
+
+            if (_moveForward || _moveBackward)
+            {
+                MoveForwardBackward(_moveForward ? -1 : 1);
+            }
+        }
         private void MoveForwardBackward(int dir)
         {
             _isStop = false;
@@ -114,17 +131,10 @@ namespace Player.MovementController
             AnimationVelocitySet(1);
         }
 
-        private void AnimationVelocitySet(float speedVal)
+        #endregion
+
+        private void PlayerMoveWithRotation()
         {
-            if (_animationVelocity < speedVal)
-                _animationVelocity += Time.deltaTime * .2f;
-            else
-                _animationVelocity = speedVal;
-        }
-        private void Update()
-        {
-            StopAction();
-            MovePlayer();
             _moveDir = new Vector3(_horizontalMove, 0, _verticalMove);
             _moveDir.Normalize();
             if (_isJump)
@@ -143,18 +153,65 @@ namespace Player.MovementController
             
             transform.rotation = lookRotation;
         }
-
-        private void MovePlayer()
+        
+        private void AnimationVelocitySet(float speedVal)
         {
-            if (_moveLeft || _moveRight)
-            {
-                MoveLeftRight(_moveLeft ? -1 : 1);
-            }
+            _isStartWalkSoundPlay = true;
+            if (_animationVelocity < speedVal)
+                _animationVelocity += Time.deltaTime * .2f;
+            else
+                _animationVelocity = speedVal;
+        }
 
-            if (_moveForward || _moveBackward)
+        #endregion
+
+        #region Play sound and Player stop logic
+
+        private void CheckPlayerStoped()
+        {
+            if(!_isStop)return;
+            if (_speed > 0)
+                _speed -= Time.deltaTime * 5f;
+            else
+                _horizontalMove = _verticalMove = 0;
+            
+            if (_animationVelocity > 0)
+                _animationVelocity -= Time.deltaTime * 2f;
+        }
+        
+        private void SoundPlayer()
+        {
+            if (_isStartWalkSoundPlay && _isStartRunSoundPlay) return;
+            if (_animationVelocity <= 0)
             {
-                MoveForwardBackward(_moveForward ? -1 : 1);
+                //stop audio.
+                _isStartWalkSoundPlay = _isStartRunSoundPlay = false;
+                GameBehaviourManager.Instance.SoundController.StopWalkRunSound();
+                return;
+            }
+            
+            switch (_animationVelocity)
+            {
+                case > 0 and < .5f:
+                    if (!_isStartWalkSoundPlay)
+                    {
+                        _isStartRunSoundPlay = false;
+                        _isStartWalkSoundPlay = true;
+                        GameBehaviourManager.Instance.SoundController.PlayWalkSound();
+                    }
+                    break;
+                case >.5f and < 1f:
+                    if (!_isStartRunSoundPlay)
+                    {
+                        _isStartWalkSoundPlay = false;
+                        _isStartRunSoundPlay = true;
+                        GameBehaviourManager.Instance.SoundController.PlayRunSound();
+                    }
+                    break;
             }
         }
+        
+
+        #endregion
     }
 }

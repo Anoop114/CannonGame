@@ -1,5 +1,7 @@
+using CameraScript;
 using Player;
 using Player.MovementController;
+using SoundManager;
 using UIScripts;
 using UnityEngine;
 
@@ -27,13 +29,27 @@ namespace Utils
 
         #endregion
 
+        #region Private Variables
+
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private UIManager uIManager;
         [SerializeField] private AudioListener audioListener;
         [SerializeField] private SwipeAndHold4Directions swipeController;
+        [SerializeField] private SoundBehaviour soundController;
+        [SerializeField] private SmoothCameraFollow camScript;
+        
+
+        #endregion
+
+        #region Global Refrences
+
+        public SmoothCameraFollow CamScript => camScript;
+        public SoundBehaviour SoundController => soundController;
         public SwipeAndHold4Directions SwipeController => swipeController;
         public UIManager UIManager => uIManager;
         public AudioListener AudioListener => audioListener;
         public PlayerAnimationController PlayerAnimationController => playerAnimationController;
+
+        #endregion
     }
 }

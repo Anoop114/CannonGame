@@ -24,6 +24,8 @@ namespace Player
             particle.Play();
             _pickupCount++;
             bombCount.text = $"{arg0}";
+            StaticHelper.CannonBallPickupCount = _pickupCount;
+            GameBehaviourManager.Instance.SoundController.PlayPickupAudio();
             if (_pickupCount >= 5)
             {
                 //GameBehaviourManager.Instance.UIManager;

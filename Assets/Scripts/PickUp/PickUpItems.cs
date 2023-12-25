@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Utils;
 
@@ -18,7 +17,7 @@ namespace PickUp
         {
             if (other.CompareTag("Pickup"))
             {
-                ActionHelper.OnPickupAction?.Invoke(false,other.gameObject);
+                ActionHelper.OnPickupAction?.Invoke(false,null);
             }
         }
     }

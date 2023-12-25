@@ -7,5 +7,9 @@ namespace Utils
     {
         public static Action<PlayerDirection> OnFingerMove;
         public static Action<bool,GameObject> OnPickupAction;
+        
+        //-------------------------------------------------------
+
+        public static Action<float> OnScreenShakeCall;
     }
 }
