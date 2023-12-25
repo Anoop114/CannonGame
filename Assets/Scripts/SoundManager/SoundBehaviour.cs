@@ -6,13 +6,10 @@ namespace SoundManager
     {
         [Header("Audio Sources")]
         [SerializeField] private AudioSource globalAudioSource;
-        [SerializeField] private AudioSource walkingAudioSource;
         [SerializeField] private AudioSource interactionAudioSource;
 
         [Header("AudioClip")] 
         [SerializeField] private AudioClip gameSound;
-        [SerializeField] private AudioClip walk;
-        [SerializeField] private AudioClip run;
         [SerializeField] private AudioClip pickUp;
         [SerializeField] private AudioClip fire;
 
@@ -21,25 +18,7 @@ namespace SoundManager
             globalAudioSource.clip = gameSound;
             globalAudioSource.Play();
         }
-
-        public void PlayWalkSound()
-        {
-            walkingAudioSource.Pause();
-            walkingAudioSource.clip = walk;
-            walkingAudioSource.Play();
-        }
         
-        public void PlayRunSound()
-        {
-            walkingAudioSource.Pause();
-            walkingAudioSource.clip = run;
-            walkingAudioSource.Play();
-        }
-
-        public void StopWalkRunSound()
-        {
-            walkingAudioSource.Stop();
-        }
         
         public void PlayPickupAudio()
         {
@@ -53,6 +32,16 @@ namespace SoundManager
             interactionAudioSource.Stop();
             interactionAudioSource.clip = fire;
             interactionAudioSource.Play();
+        }
+
+        public void ChangeSoundVolume(float volume)
+        {
+            interactionAudioSource.volume = volume;
+        }
+
+        public void ChangeMusicVolume(float volume)
+        {
+            globalAudioSource.volume = volume;
         }
     }
 }

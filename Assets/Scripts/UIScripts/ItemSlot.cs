@@ -28,6 +28,7 @@ namespace UIScripts
             eventData.pointerDrag.GetComponent<DragDrop>().IsDragSuccess();
             balls[_ballCount].SetActive(true);
             dropParticle.Play();
+            GameBehaviourManager.Instance.SoundController.PlayPickupAudio();
             _ballCount++;
             if (_ballCount < 5) return;
             

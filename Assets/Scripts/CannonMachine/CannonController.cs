@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
@@ -25,6 +24,8 @@ namespace CannonMachine
         public Transform ShotPoint => shotPoint;
         public float BlastPower => blastPower;
         public bool isCannonStart;
+
+        private int shootCount;
         #endregion
     
         private void Start()
@@ -61,6 +62,11 @@ namespace CannonMachine
 
         private void ShootCannonBallAction()
         {
+            if (shootCount >= 5)
+            {
+                GameBehaviourManager.Instance.UIManager.LooseMenu();
+                return;
+            }
             var position = shotPoint.position;
             var rotation = shotPoint.rotation;
         
@@ -68,10 +74,12 @@ namespace CannonMachine
             createdCannonball.GetComponent<Rigidbody>().velocity = shotPoint.transform.up * blastPower;
             
             // Added explosion for added effect
-            Destroy(Instantiate(explosion, position, rotation), 2);
+            //Destroy(Instantiate(explosion, position, rotation), 2);
 
             // Shake the screen for added effect
             ActionHelper.OnScreenShakeCall?.Invoke(0.2f);
+            GameBehaviourManager.Instance.SoundController.PlayFireSound();
+            shootCount++;
         }
     }
 }

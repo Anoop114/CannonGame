@@ -34,7 +34,6 @@ namespace Utils
 
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private UIManager uIManager;
-        [SerializeField] private AudioListener audioListener;
         [SerializeField] private SwipeAndHold4Directions swipeController;
         [SerializeField] private SoundBehaviour soundController;
         [SerializeField] private SmoothCameraFollow camScript;
@@ -49,7 +48,6 @@ namespace Utils
         public SoundBehaviour SoundController => soundController;
         public SwipeAndHold4Directions SwipeController => swipeController;
         public UIManager UIManager => uIManager;
-        public AudioListener AudioListener => audioListener;
         public PlayerAnimationController PlayerAnimationController => playerAnimationController;
 
         #endregion

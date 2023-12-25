@@ -21,7 +21,6 @@ namespace Player.MovementController
         private bool _isStop;
         private bool _isJump;
         private bool _moveLeft, _moveRight, _moveForward, _moveBackward;
-        private bool _isStartWalkSoundPlay,_isStartRunSoundPlay;
         
         [SerializeField] private float speedAcceleration;
         [SerializeField] private float maxSpeed;
@@ -61,16 +60,13 @@ namespace Player.MovementController
         private void Update()
         {
             //check player stop moving
-            CheckPlayerStoped();
+            CheckPlayerStopped();
             
             // check which direction the player is moving.
             AssigneePlayerDirection();
             
             // move player on desire direction with rotation.
             PlayerMoveWithRotation();
-            
-            // play walking and running sound.
-            SoundPlayer();
         }
         
         #region Move Player Logic
@@ -169,7 +165,6 @@ namespace Player.MovementController
         
         private void AnimationVelocitySet(float speedVal)
         {
-            _isStartWalkSoundPlay = true;
             if (_animationVelocity < speedVal)
                 _animationVelocity += Time.deltaTime * .2f;
             else
@@ -178,9 +173,9 @@ namespace Player.MovementController
 
         #endregion
 
-        #region Play sound and Player stop logic
+        #region Player stop logic
 
-        private void CheckPlayerStoped()
+        private void CheckPlayerStopped()
         {
             if(!_isStop)return;
             if (_speed > 0)
@@ -191,40 +186,6 @@ namespace Player.MovementController
             if (_animationVelocity > 0)
                 _animationVelocity -= Time.deltaTime * 2f;
         }
-        
-        private void SoundPlayer()
-        {
-            if (_isStartWalkSoundPlay && _isStartRunSoundPlay) return;
-            if (_animationVelocity <= 0)
-            {
-                //stop audio.
-                _isStartWalkSoundPlay = _isStartRunSoundPlay = false;
-                GameBehaviourManager.Instance.SoundController.StopWalkRunSound();
-                return;
-            }
-            
-            switch (_animationVelocity)
-            {
-                case > 0 and < .5f:
-                    if (!_isStartWalkSoundPlay)
-                    {
-                        _isStartRunSoundPlay = false;
-                        _isStartWalkSoundPlay = true;
-                        GameBehaviourManager.Instance.SoundController.PlayWalkSound();
-                    }
-                    break;
-                case >.5f and < 1f:
-                    if (!_isStartRunSoundPlay)
-                    {
-                        _isStartWalkSoundPlay = false;
-                        _isStartRunSoundPlay = true;
-                        GameBehaviourManager.Instance.SoundController.PlayRunSound();
-                    }
-                    break;
-            }
-        }
-        
-
         #endregion
     }
 }

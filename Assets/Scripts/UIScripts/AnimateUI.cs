@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UIScripts
 {
@@ -48,6 +49,12 @@ namespace UIScripts
 #if UNITY_EDITOR
             EditorApplication. ExitPlaymode();
 #endif
+        }
+
+        public void PlayAgain()
+        {
+            var sceneId = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(sceneId);
         }
         #endregion
     }

@@ -7,19 +7,26 @@ namespace UIScripts
     public class UIButtonAction : MonoBehaviour
     {
         [Header("sound Btn")]
-        [SerializeField] private Button soundBtn;
-        [SerializeField] private GameObject closeSoundImage;
-        private bool _isSoundBtnClicked;
+        [SerializeField] private Slider musicSound;
+        [SerializeField] private Slider soundSound;
+        [SerializeField] private GameObject musicEnd;
+        [SerializeField] private GameObject soundEnd;
         private void Start()
         {
-            soundBtn.onClick.AddListener(SoundBtnClick);
+            musicSound.onValueChanged.AddListener(ChangeMusicSoundValue);
+            soundSound.onValueChanged.AddListener(ChangeSoundSoundValue);
         }
 
-        private void SoundBtnClick()
+        private void ChangeSoundSoundValue(float volume)
         {
-            _isSoundBtnClicked = !_isSoundBtnClicked;
-            closeSoundImage.SetActive(_isSoundBtnClicked);
-            GameBehaviourManager.Instance.AudioListener.enabled = !_isSoundBtnClicked;
+            GameBehaviourManager.Instance.SoundController.ChangeSoundVolume(volume);
+            soundEnd.SetActive(volume <= 0);
+        }
+
+        private void ChangeMusicSoundValue(float volume)
+        {
+            GameBehaviourManager.Instance.SoundController.ChangeMusicVolume(volume);
+            musicEnd.SetActive(volume <= 0);
         }
     }
 }
