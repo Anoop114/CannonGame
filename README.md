@@ -1,4 +1,4 @@
-# CannonGame
+# CannonFire
 
 ---
 
@@ -32,6 +32,6 @@ Cannon Fire is designed and built for Android devices. You can download the buil
 ---
 
 ### Game Play Video
-
+https://github.com/Anoop114/CannonGame/assets/69163049/56f0a16b-a45b-4f5f-bf7b-8149f597f956
 
 Hope you enjoy it.
