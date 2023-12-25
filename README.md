@@ -7,7 +7,7 @@ A prototype game called Cannon Fire has an interactive user interface, player co
 ---
 ### Download And Play
 
-Cannon Fire is designed and built for Android devices. You can download the build by clicking on this link [Download Link]() or by visiting the [Build Page]().
+Cannon Fire is designed and built for Android devices. You can download the build by clicking on this link [Download Link](https://github.com/Anoop114/CannonGame/releases/download/AndroidBuild/CannonFire.apk) or by visiting the [Build Page](https://github.com/Anoop114/CannonGame/releases/tag/AndroidBuild).
 
 ---
 
