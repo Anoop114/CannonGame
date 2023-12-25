@@ -11,5 +11,8 @@ namespace Utils
         //-------------------------------------------------------
 
         public static Action<float> OnScreenShakeCall;
+        
+        //-------------------------------------------------------
+        public static Action OnCannonMachineActive;
     }
 }

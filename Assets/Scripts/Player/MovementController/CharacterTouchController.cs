@@ -39,9 +39,22 @@ namespace Player.MovementController
 
             jumpBtn.onClick.AddListener(JumpAction);
         }
-        private void OnEnable() => ActionHelper.OnFingerMove += MovePlayer;
+        private void OnEnable()
+        {
+            ActionHelper.OnFingerMove += MovePlayer;
+            ActionHelper.OnCannonMachineActive += DisablePlayer;
+        }
 
-        private void OnDisable() => ActionHelper.OnFingerMove += MovePlayer;
+        private void OnDisable()
+        {
+            ActionHelper.OnFingerMove -= MovePlayer;
+            ActionHelper.OnCannonMachineActive -= DisablePlayer;
+        }
+
+        private void DisablePlayer()
+        {
+            gameObject.SetActive(false);
+        }
 
         #endregion
 

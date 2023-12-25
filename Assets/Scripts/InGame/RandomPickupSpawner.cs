@@ -1,5 +1,7 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace InGame
@@ -36,6 +38,10 @@ namespace InGame
             }
         }
 
+        private void OnEnable() => ActionHelper.OnCannonMachineActive += AllSpawnObjectsDisable;
+
+        private void OnDisable() => ActionHelper.OnCannonMachineActive -= AllSpawnObjectsDisable;
+
         // call spawn random ball and cubes.
         private void SpawnRandomCannonBall(GameObject spawnObj)
         {
@@ -47,9 +53,9 @@ namespace InGame
             tempObject.transform.parent = spawnParent;
         }
 
-        public void DestroySpawnObjects()
+        private void AllSpawnObjectsDisable()
         {
-            Destroy(spawnParent.gameObject);
+            spawnParent.gameObject.SetActive(false);
         }
     }
 }

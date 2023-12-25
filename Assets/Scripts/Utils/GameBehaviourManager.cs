@@ -1,4 +1,5 @@
 using CameraScript;
+using CannonMachine;
 using Player;
 using Player.MovementController;
 using SoundManager;
@@ -37,12 +38,13 @@ namespace Utils
         [SerializeField] private SwipeAndHold4Directions swipeController;
         [SerializeField] private SoundBehaviour soundController;
         [SerializeField] private SmoothCameraFollow camScript;
-        
+        [SerializeField] private CannonController cannonMachineController;
 
         #endregion
 
         #region Global Refrences
 
+        public CannonController CannonMachineController => cannonMachineController;
         public SmoothCameraFollow CamScript => camScript;
         public SoundBehaviour SoundController => soundController;
         public SwipeAndHold4Directions SwipeController => swipeController;

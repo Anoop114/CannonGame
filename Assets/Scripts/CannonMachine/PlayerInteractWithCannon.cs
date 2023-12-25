@@ -22,7 +22,7 @@ namespace CannonMachine
             }
             else
             {
-                Debug.Log("popup ui of drag and drop.");
+                GameBehaviourManager.Instance.UIManager.DragDropCannonBallActive();
                 Destroy(_mScript);
             }
         }
