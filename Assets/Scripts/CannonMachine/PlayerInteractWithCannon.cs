@@ -18,12 +18,21 @@ namespace CannonMachine
             
             if (StaticHelper.CannonBallPickupCount < 5)
             {
-                Debug.Log("Player Need to collect ball first");
+                GameBehaviourManager.Instance.UIManager.ErrorDisplayCannonMenu();
             }
             else
             {
                 GameBehaviourManager.Instance.UIManager.DragDropCannonBallActive();
                 Destroy(_mScript);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+            if (StaticHelper.CannonBallPickupCount < 5)
+            {
+                GameBehaviourManager.Instance.UIManager.CollectCannonBallActive();
             }
         }
     }

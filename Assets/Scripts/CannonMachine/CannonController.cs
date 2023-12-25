@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 
@@ -23,7 +24,7 @@ namespace CannonMachine
     
         public Transform ShotPoint => shotPoint;
         public float BlastPower => blastPower;
-
+        public bool isCannonStart;
         #endregion
     
         private void Start()
@@ -32,6 +33,10 @@ namespace CannonMachine
             yAxisRotation.onValueChanged.AddListener(RotateCannonYAxis);
             shootBtn.onClick.AddListener(ShootCannonBallAction);
         }
+
+        private void OnEnable() => isCannonStart = true;
+
+        private void OnDisable() => isCannonStart = false;
 
         #region Cannon movement
 

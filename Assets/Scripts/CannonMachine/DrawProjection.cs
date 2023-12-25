@@ -26,6 +26,8 @@ namespace CannonMachine
         // Draw line Render path.
         private void Update()
         {
+            if(!cannonController.isCannonStart)return;
+            
             lineRenderer.positionCount = numPoints;
             var points = new List<Vector3>();
             var startingPosition = cannonController.ShotPoint.position;

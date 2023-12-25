@@ -9,8 +9,20 @@ namespace UIScripts
         [SerializeField] private GameObject collectCannonBall;
         [SerializeField] private GameObject dragDropCannonBall;
         [SerializeField] private GameObject cannonMachineMenu;
+        [SerializeField] private GameObject pickupComplete;
+        [SerializeField] private GameObject errorDisplayCannonMenu;
 
 
+        public void PickupCompleteAction()
+        {
+            SetActivePanel(pickupComplete.name);
+        }
+        
+        public void ErrorDisplayCannonMenu()
+        {
+            SetActivePanel(errorDisplayCannonMenu.name);
+        }
+        
         public void MainMenuActive()
         {
             GameBehaviourManager.Instance.SwipeController.enabled = false;
@@ -29,14 +41,13 @@ namespace UIScripts
         {
             SetActivePanel(dragDropCannonBall.name);
             GameBehaviourManager.Instance.CamScript.UpdateCameraPosToCannon();
-            GameBehaviourManager.Instance.CannonMachineController.enabled = true;
             ActionHelper.OnCannonMachineActive?.Invoke();
-            Debug.Log("destroy all spawned object and disable player");
         }
 
         public void CannonMachineMenu()
         {
             SetActivePanel(cannonMachineMenu.name);
+            GameBehaviourManager.Instance.CannonMachineController.enabled = true;
             Debug.Log("Active cannon controller script");
         }
         
@@ -46,6 +57,8 @@ namespace UIScripts
             collectCannonBall.SetActive(activePanel.Equals(collectCannonBall.name));
             dragDropCannonBall.SetActive(activePanel.Equals(dragDropCannonBall.name));
             cannonMachineMenu.SetActive(activePanel.Equals(cannonMachineMenu.name));
+            pickupComplete.SetActive(activePanel.Equals(pickupComplete.name));
+            errorDisplayCannonMenu.SetActive(activePanel.Equals(errorDisplayCannonMenu.name));
         }
     }
 }
