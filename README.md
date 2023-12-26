@@ -22,7 +22,7 @@ Cannon Fire is designed and built for Android devices. You can download the buil
 ### How to Play
 
 1. To move the player left, right, forward, and backward, use the left side of the screen.
-   - This game feature 2 input controller
+   - This game features 2 input controller
    ![ControllerChoice](./Production/4.png)
      - A. Joystick Controller
      ![JoystickController](./Production/5.png)
@@ -39,8 +39,11 @@ Cannon Fire is designed and built for Android devices. You can download the buil
 ### Game Play Video
 
 - With Swipe Controller
+  
 https://github.com/Anoop114/CannonGame/assets/69163049/56f0a16b-a45b-4f5f-bf7b-8149f597f956
 
 - With Joystick Controller
+
+https://github.com/Anoop114/CannonGame/assets/69163049/17dc06a0-917d-4591-b172-2f046903af2c
 
 Hope you enjoy it.
