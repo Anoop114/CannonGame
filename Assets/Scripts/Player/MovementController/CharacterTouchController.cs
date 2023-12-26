@@ -108,8 +108,7 @@ namespace Player.MovementController
             {
                 MoveLeftRight(_moveLeft ? -1 : 1);
             }
-
-            if (_moveForward || _moveBackward)
+            else if (_moveForward || _moveBackward)
             {
                 MoveForwardBackward(_moveForward ? -1 : 1);
             }
@@ -118,7 +117,7 @@ namespace Player.MovementController
         {
             _isStop = false;
             _horizontalMove = dir;
-
+            _verticalMove = 0;
             if (_speed <= maxSpeed)
                 _speed += Time.deltaTime * speedAcceleration;
             else
@@ -131,7 +130,7 @@ namespace Player.MovementController
 
             _isStop = false;
             _verticalMove = dir;
-            
+            _horizontalMove = 0;
             if (_speed <= maxSpeed)
                 _speed += Time.deltaTime * speedAcceleration;
             else
