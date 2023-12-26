@@ -38,7 +38,7 @@ namespace Utils
         [SerializeField] private SoundBehaviour soundController;
         [SerializeField] private SmoothCameraFollow camScript;
         [SerializeField] private CannonController cannonMachineController;
-
+        [SerializeField] private Joystick joystickController;
         #endregion
 
         #region Global Refrences
@@ -51,5 +51,12 @@ namespace Utils
         public PlayerAnimationController PlayerAnimationController => playerAnimationController;
 
         #endregion
+
+        public void JoystickAndSwipeController(bool action)
+        {
+            joystickController.enabled = action;
+            joystickController.transform.parent.gameObject.SetActive(action);
+            swipeController.enabled = !action;
+        }
     }
 }

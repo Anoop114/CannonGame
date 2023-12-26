@@ -6,7 +6,6 @@ namespace CannonMachine
     public class CannonBallHit : MonoBehaviour
     {
         private CannonBallHit _mScript;
-
         private void Start()
         {
             _mScript = this;

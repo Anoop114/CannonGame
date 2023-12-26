@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace CannonMachine
@@ -6,7 +7,7 @@ namespace CannonMachine
     public class PlayerInteractWithCannon : MonoBehaviour
     {
         private PlayerInteractWithCannon _mScript;
-
+        [SerializeField] private GameObject errorDisplay;
         private void Start()
         {
             _mScript = this;
@@ -18,7 +19,7 @@ namespace CannonMachine
             
             if (StaticHelper.CannonBallPickupCount < 5)
             {
-                GameBehaviourManager.Instance.UIManager.ErrorDisplayCannonMenu();
+                errorDisplay.SetActive(true);
             }
             else
             {
@@ -32,7 +33,7 @@ namespace CannonMachine
             if (!other.CompareTag("Player")) return;
             if (StaticHelper.CannonBallPickupCount < 5)
             {
-                GameBehaviourManager.Instance.UIManager.CollectCannonBallActive();
+                errorDisplay.SetActive(false);
             }
         }
     }

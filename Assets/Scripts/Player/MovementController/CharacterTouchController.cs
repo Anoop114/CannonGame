@@ -25,7 +25,7 @@ namespace Player.MovementController
         [SerializeField] private float speedAcceleration;
         [SerializeField] private float maxSpeed;
         [SerializeField] private Button jumpBtn;
-        
+        [SerializeField] private Joystick joystick; 
         private void JumpAction() => _isJump = true;
 
         #endregion
@@ -59,6 +59,7 @@ namespace Player.MovementController
 
         private void Update()
         {
+            if(!StaticHelper.IsPlayStart)return;
             //check player stop moving
             CheckPlayerStopped();
             
@@ -104,20 +105,33 @@ namespace Player.MovementController
 
         private void AssigneePlayerDirection()
         {
-            if (_moveLeft || _moveRight)
+            if (StaticHelper.IsUseJoystick)
             {
-                MoveLeftRight(_moveLeft ? -1 : 1);
+                if (IsJoystickHMove())
+                    MoveLeftRight(joystick.Horizontal);
+                else
+                    _horizontalMove = 0;
+
+                if (IsJoystickVMove())
+                    MoveForwardBackward(-joystick.Vertical);
+                else
+                    _verticalMove = 0;
             }
-            else if (_moveForward || _moveBackward)
+            else
             {
-                MoveForwardBackward(_moveForward ? -1 : 1);
+                if (_moveLeft || _moveRight)
+                    MoveLeftRight(_moveLeft ? -1 : 1);
+                else if (_moveForward || _moveBackward)
+                    MoveForwardBackward(_moveForward ? -1 : 1);
             }
         }
-        private void MoveForwardBackward(int dir)
+        private void MoveForwardBackward(float dir)
         {
             _isStop = false;
             _horizontalMove = dir;
-            _verticalMove = 0;
+            if(!StaticHelper.IsUseJoystick)
+                _verticalMove = 0;
+            
             if (_speed <= maxSpeed)
                 _speed += Time.deltaTime * speedAcceleration;
             else
@@ -125,12 +139,14 @@ namespace Player.MovementController
 
             AnimationVelocitySet(1);
         }
-        private void MoveLeftRight(int dir)
+        private void MoveLeftRight(float dir)
         {
 
             _isStop = false;
             _verticalMove = dir;
-            _horizontalMove = 0;
+            if(!StaticHelper.IsUseJoystick)
+                _horizontalMove = 0;
+            
             if (_speed <= maxSpeed)
                 _speed += Time.deltaTime * speedAcceleration;
             else
@@ -176,7 +192,11 @@ namespace Player.MovementController
 
         private void CheckPlayerStopped()
         {
-            if(!_isStop)return;
+            if (StaticHelper.IsUseJoystick)
+            {
+                if(IsJoystickHMove() && IsJoystickVMove())return;
+            }
+            else if(!_isStop)return;
             if (_speed > 0)
                 _speed -= Time.deltaTime * 5f;
             else
@@ -186,5 +206,8 @@ namespace Player.MovementController
                 _animationVelocity -= Time.deltaTime * 2f;
         }
         #endregion
+
+        private bool IsJoystickHMove() => joystick.Horizontal != 0;
+        private bool IsJoystickVMove() => joystick.Vertical != 0;
     }
 }

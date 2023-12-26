@@ -26,6 +26,7 @@ namespace UIScripts
         
         public void MainMenuActive()
         {
+            StaticHelper.IsPlayStart = false;
             GameBehaviourManager.Instance.SwipeController.enabled = false;
             GameBehaviourManager.Instance.CannonMachineController.enabled = false;
             SetActivePanel(menuUI.name);
@@ -33,26 +34,24 @@ namespace UIScripts
 
         public void CollectCannonBallActive()
         {
+            StaticHelper.IsPlayStart = true;
             GameBehaviourManager.Instance.SwipeController.enabled = true;
             if (_isCollectCannonBallVisit)
             {
-                PickupCompleteAction();
-                return;
+                PickupCompleteAction(true);
             }
             SetActivePanel(collectCannonBall.name);
         }
-        public void PickupCompleteAction()
+        public void PickupCompleteAction(bool action)
         {
             _isCollectCannonBallVisit = true;
             if(_isPickupCompleteVisit) return;
-            SetActivePanel(pickupComplete.name);
-        }
-        public void ErrorDisplayCannonMenu()
-        {
-            SetActivePanel(errorDisplayCannonMenu.name);
+            if(action)
+                SetActivePanel(pickupComplete.name);
         }
         public void DragDropCannonBallActive()
         {
+            StaticHelper.IsUseJoystick = false;
             _isPickupCompleteVisit = true;
             localMenu.SetActive(false);
             GameBehaviourManager.Instance.CamScript.UpdateCameraPosToCannon();
@@ -87,10 +86,13 @@ namespace UIScripts
         private void SetActivePanel(string activePanel)
         {
             menuUI.SetActive(activePanel.Equals(menuUI.name));
-            collectCannonBall.SetActive(activePanel.Equals(collectCannonBall.name));
+            if (!StaticHelper.IsUseJoystick || activePanel.Equals(collectCannonBall.name))
+            {
+                collectCannonBall.SetActive(activePanel.Equals(collectCannonBall.name));
+            }
+            pickupComplete.SetActive(activePanel.Equals(pickupComplete.name));
             dragDropCannonBall.SetActive(activePanel.Equals(dragDropCannonBall.name));
             cannonMachineMenu.SetActive(activePanel.Equals(cannonMachineMenu.name));
-            pickupComplete.SetActive(activePanel.Equals(pickupComplete.name));
             errorDisplayCannonMenu.SetActive(activePanel.Equals(errorDisplayCannonMenu.name));
             winMenu.SetActive(activePanel.Equals(winMenu.name));
             looseMenu.SetActive(activePanel.Equals(looseMenu.name));

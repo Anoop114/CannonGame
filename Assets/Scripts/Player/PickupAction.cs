@@ -11,6 +11,7 @@ namespace Player
         [SerializeField] private Slider pickupSlider;
         [SerializeField] private ParticleSystem particle;
         [SerializeField] private TMP_Text bombCount;
+        [SerializeField] private GameObject pickupCompleteDisplay;
         private GameObject _tempHolder;
         private int _pickupCount;
         private void Start()
@@ -28,7 +29,8 @@ namespace Player
             GameBehaviourManager.Instance.SoundController.PlayPickupAudio();
             if (_pickupCount < 5) return;
             
-            GameBehaviourManager.Instance.UIManager.PickupCompleteAction();
+            GameBehaviourManager.Instance.UIManager.PickupCompleteAction(false);
+            pickupCompleteDisplay.SetActive(true);
             enabled = false;
         }
 
